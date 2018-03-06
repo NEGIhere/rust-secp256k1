@@ -1,10 +1,8 @@
-[![Build Status](https://travis-ci.org/apoelstra/rust-secp256k1.png?branch=master)](https://travis-ci.org/apoelstra/rust-secp256k1)
+### rust-secp256k1-sha3
 
-### rust-secp256k1
-
-`rust-secp256k1` is a wrapper around ![libsecp256k1](https://github.com/bitcoin/secp256k1),
+`rust-secp256k1-sha3` is a wrapper around ![libsecp256k1](https://github.com/bitcoin/secp256k1),
 a C library by Peter Wuille for producing ECDSA signatures using the SECG curve
-`secp256k1`. This library
+`secp256k1` with ![SHA3](https://github.com/mjosaarinen/tiny_sha3) hash function. This library
 * exposes type-safe Rust bindings for all `libsecp256k1` functions
 * implements key generation
 * implements deterministic nonce generation via RFC6979
