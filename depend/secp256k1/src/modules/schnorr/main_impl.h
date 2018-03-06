@@ -9,13 +9,20 @@
 
 #include "include/secp256k1_schnorr.h"
 #include "modules/schnorr/schnorr_impl.h"
+//#include "schnorr_impl.h"
 
 static void secp256k1_schnorr_msghash_sha256(unsigned char *h32, const unsigned char *r32, const unsigned char *msg32) {
-    secp256k1_sha256_t sha;
-    secp256k1_sha256_initialize(&sha);
-    secp256k1_sha256_write(&sha, r32, 32);
-    secp256k1_sha256_write(&sha, msg32, 32);
-    secp256k1_sha256_finalize(&sha, h32);
+//    secp256k1_sha256_t sha;
+//    secp256k1_sha256_initialize(&sha);
+//    secp256k1_sha256_write(&sha, r32, 32);
+//    secp256k1_sha256_write(&sha, msg32, 32);
+//    secp256k1_sha256_finalize(&sha, h32);
+
+    sha3_ctx_t sha;
+    sha3_init(&sha, 32);
+    sha3_update(&sha, r32, 32);
+    sha3_update(&sha, msg32, 32);
+    sha3_final(h32, &sha);
 }
 
 static const unsigned char secp256k1_schnorr_algo16[17] = "Schnorr+SHA256  ";

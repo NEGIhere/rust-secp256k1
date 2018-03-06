@@ -9,6 +9,7 @@
 
 #include "include/secp256k1_ecdh.h"
 #include "ecmult_const_impl.h"
+//#include "src/ecmult_const_impl.h"
 
 int secp256k1_ecdh(const secp256k1_context* ctx, unsigned char *result, const secp256k1_pubkey *point, const unsigned char *scalar) {
     int ret = 0;
@@ -28,7 +29,8 @@ int secp256k1_ecdh(const secp256k1_context* ctx, unsigned char *result, const se
     } else {
         unsigned char x[32];
         unsigned char y[1];
-        secp256k1_sha256_t sha;
+//        secp256k1_sha256_t sha;
+        sha3_ctx_t sha;
 
         secp256k1_ecmult_const(&res, &pt, &s);
         secp256k1_ge_set_gej(&pt, &res);
@@ -40,10 +42,15 @@ int secp256k1_ecdh(const secp256k1_context* ctx, unsigned char *result, const se
         secp256k1_fe_get_b32(x, &pt.x);
         y[0] = 0x02 | secp256k1_fe_is_odd(&pt.y);
 
-        secp256k1_sha256_initialize(&sha);
-        secp256k1_sha256_write(&sha, y, sizeof(y));
-        secp256k1_sha256_write(&sha, x, sizeof(x));
-        secp256k1_sha256_finalize(&sha, result);
+//        secp256k1_sha256_initialize(&sha);
+//        secp256k1_sha256_write(&sha, y, sizeof(y));
+//        secp256k1_sha256_write(&sha, x, sizeof(x));
+//        secp256k1_sha256_finalize(&sha, result);
+        sha3_init(&sha, 32);
+        sha3_update(&sha, y, sizeof(y));
+        sha3_update(&sha, x, sizeof(x));
+        sha3_final(result, &sha);
+
         ret = 1;
     }
 

@@ -9,6 +9,8 @@
 
 #include "scalar.h"
 #include "group.h"
+//#include "src/scalar.h"
+//#include "src/group.h"
 
 typedef void (*secp256k1_schnorr_msghash)(unsigned char *h32, const unsigned char *r32, const unsigned char *msg32);
 

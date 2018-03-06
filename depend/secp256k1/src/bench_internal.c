@@ -251,12 +251,12 @@ void bench_wnaf_const(void* arg) {
 void bench_sha256(void* arg) {
     int i;
     bench_inv_t *data = (bench_inv_t*)arg;
-    secp256k1_sha256_t sha;
+    //secp256k1_sha256_t sha;
 
     for (i = 0; i < 20000; i++) {
-        secp256k1_sha256_initialize(&sha);
-        secp256k1_sha256_write(&sha, data->data, 32);
-        secp256k1_sha256_finalize(&sha, data->data);
+        //secp256k1_sha256_initialize(&sha);
+        //secp256k1_sha256_write(&sha, data->data, 32);
+        //secp256k1_sha256_finalize(&sha, data->data);
     }
 }
 

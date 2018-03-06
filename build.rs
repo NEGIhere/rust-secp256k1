@@ -25,10 +25,14 @@ extern crate gcc;
 
 fn main() {
     let mut base_config = gcc::Build::new();
+
+//    println!(base_config.is_flag_supported("/UTF-8"));
+
     base_config.include("depend/secp256k1/")
                .include("depend/secp256k1/include")
                .include("depend/secp256k1/src")
                .flag("-g")
+               .flag("/UTF-8")
                // TODO these three should be changed to use libgmp, at least until secp PR 290 is merged
                .define("USE_NUM_NONE", Some("1"))
                .define("USE_FIELD_INV_BUILTIN", Some("1"))
@@ -43,8 +47,9 @@ fn main() {
                .define("ENABLE_MODULE_RECOVERY", Some("1"));
 
     // secp256k1
-    base_config.file("depend/secp256k1/contrib/lax_der_parsing.c")
+    if let Err(e) = base_config.file("depend/secp256k1/contrib/lax_der_parsing.c")
                .file("depend/secp256k1/src/secp256k1.c")
-               .compile("libsecp256k1.a");
+               .try_compile("libsecp256k1.a") {
+        println!("{:?}", e);
+    }
 }
-
